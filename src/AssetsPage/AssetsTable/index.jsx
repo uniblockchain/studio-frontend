@@ -51,6 +51,11 @@ export class AssetsTable extends React.Component {
         columnSortable: false,
         hideHeader: true,
       },
+      urls: {
+        label: 'URLs',
+        key: 'urls',
+        columnSortable: false,
+      },
     };
 
     this.trashcanRefs = {};
@@ -136,6 +141,24 @@ export class AssetsTable extends React.Component {
         add a description at that point
       */
       currentAsset.image_preview = this.getImageThumbnail(currentAsset.thumbnail);
+
+      const urls = (
+        <span>
+          <Button
+            label={'Copy Studio URL'}
+            buttonType={'light'}
+            aria-label={`Copy ${currentAsset.display_name} Studio URL to clipboard`}
+            onClick={() => console.log('copy studio url')}
+          />
+          <Button
+            label={'Copy Web URL'}
+            buttonType={'light'}
+            aria-label={`Copy ${currentAsset.display_name} Web URL to clipboard`}
+            onClick={() => console.log('copy web url')}
+          />
+        </span>);
+
+      currentAsset.urls = urls;
 
       return currentAsset;
     });
