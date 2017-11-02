@@ -5,8 +5,8 @@ import Button from '@edx/paragon/src/Button';
 import Modal from '@edx/paragon/src/Modal';
 import StatusAlert from '@edx/paragon/src/StatusAlert';
 import classNames from 'classnames';
-import { connect } from 'react-redux';
 import copy from 'copy-to-clipboard';
+import { connect } from 'react-redux';
 
 import FontAwesomeStyles from 'font-awesome/css/font-awesome.min.css';
 import { assetActions } from '../../data/constants/actionTypes';
