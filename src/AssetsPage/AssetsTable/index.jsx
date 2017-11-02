@@ -6,10 +6,47 @@ import Modal from '@edx/paragon/src/Modal';
 import StatusAlert from '@edx/paragon/src/StatusAlert';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
+import copy from 'copy-to-clipboard';
 
 import FontAwesomeStyles from 'font-awesome/css/font-awesome.min.css';
 import { assetActions } from '../../data/constants/actionTypes';
 import { clearAssetsStatus, deleteAsset, sortUpdate } from '../../data/actions/assets';
+
+class CopyButton extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      displayText: props.displayText,
+      urlToCopy: props.textToCopy,
+      wasClicked: false,
+    };
+  }
+
+  render() {
+    return (
+      <Button
+        label={!this.state.wasClicked ? this.state.displayText : 'Copied!'}
+        onClick={() => {
+          this.setState({
+            wasClicked: true,
+          });
+          copy(`${this.props.textToCopy}`);
+        }}
+        onBlur={() => {
+          this.setState({
+            wasClicked: false,
+          });
+        }}
+      />
+    );
+  }
+}
+
+CopyButton.propTypes = {
+  displayText: PropTypes.string.isRequired,
+  textToCopy: PropTypes.string.isRequired,
+};
 
 export class AssetsTable extends React.Component {
   constructor(props) {
@@ -45,16 +82,16 @@ export class AssetsTable extends React.Component {
         key: 'date_added',
         columnSortable: true,
       },
+      urls: {
+        label: 'URLs',
+        key: 'urls',
+        columnSortable: false,
+      },
       delete_asset: {
         label: 'Delete Asset',
         key: 'delete_asset',
         columnSortable: false,
         hideHeader: true,
-      },
-      urls: {
-        label: 'URLs',
-        key: 'urls',
-        columnSortable: false,
       },
     };
 
@@ -124,7 +161,7 @@ export class AssetsTable extends React.Component {
       const deleteButton = (<Button
         className={[FontAwesomeStyles.fa, FontAwesomeStyles['fa-trash']]}
         label={''}
-        buttonType={'light'}
+        // buttonType={'light'}
         aria-label={`Delete ${currentAsset.display_name}`}
         onClick={() => { this.onDeleteClick(index); }}
         inputRef={(ref) => { this.trashcanRefs[currentAsset.id] = ref; }}
@@ -144,17 +181,13 @@ export class AssetsTable extends React.Component {
 
       const urls = (
         <span>
-          <Button
-            label={'Copy Studio URL'}
-            buttonType={'light'}
-            aria-label={`Copy ${currentAsset.display_name} Studio URL to clipboard`}
-            onClick={() => console.log('copy studio url')}
+          <CopyButton
+            displayText="Copy Studio URL"
+            textToCopy={currentAsset.url}
           />
-          <Button
-            label={'Copy Web URL'}
-            buttonType={'light'}
-            aria-label={`Copy ${currentAsset.display_name} Web URL to clipboard`}
-            onClick={() => console.log('copy web url')}
+          <CopyButton
+            displayText="Copy Web URL"
+            textToCopy={currentAsset.external_url}
           />
         </span>);
 
