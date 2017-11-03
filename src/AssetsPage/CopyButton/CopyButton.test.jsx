@@ -2,13 +2,11 @@ import React from 'react';
 import { mount } from 'enzyme';
 import CopyButton from './index';
 
-
 const defaultProps = {
   label: 'I am a copy button!',
   onCopyLabel: 'Copied!',
   textToCopy: 'This is my copy text!',
 };
-
 
 describe('<CopyButton />', () => {
   let wrapper;

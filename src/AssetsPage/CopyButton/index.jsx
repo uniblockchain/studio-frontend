@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@edx/paragon/src/Button';
-import classNames from 'classnames';
 import copy from 'copy-to-clipboard';
 
 export default class CopyButton extends React.Component {
@@ -16,7 +15,7 @@ export default class CopyButton extends React.Component {
   render() {
     return (
       <Button
-        label={!this.state.wasClicked ? this.props.label : this.props.onCopyLabel }
+        label={!this.state.wasClicked ? this.props.label : this.props.onCopyLabel}
         onClick={() => {
           this.setState({
             wasClicked: true,
