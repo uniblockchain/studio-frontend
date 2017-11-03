@@ -5,49 +5,12 @@ import Button from '@edx/paragon/src/Button';
 import Modal from '@edx/paragon/src/Modal';
 import StatusAlert from '@edx/paragon/src/StatusAlert';
 import classNames from 'classnames';
-// import copy from 'copy-to-clipboard';
 import { connect } from 'react-redux';
 
 import FontAwesomeStyles from 'font-awesome/css/font-awesome.min.css';
 import { assetActions } from '../../data/constants/actionTypes';
 import { clearAssetsStatus, deleteAsset, sortUpdate } from '../../data/actions/assets';
 import CopyButton from '../CopyButton';
-
-// class CopyButton extends React.Component {
-//   constructor(props) {
-//     super(props);
-
-//     this.state = {
-//       displayText: props.displayText,
-//       textToCopy: props.textToCopy,
-//       wasClicked: false,
-//     };
-//   }
-
-//   render() {
-//     return (
-//       <Button
-//         label={!this.state.wasClicked ? this.state.displayText : 'Copied!'}
-//         onClick={() => {
-//           this.setState({
-//             wasClicked: true,
-//           });
-//           copy(`${this.props.textToCopy}`);
-//         }}
-//         onBlur={() => {
-//           this.setState({
-//             wasClicked: false,
-//           });
-//         }}
-//       />
-//     );
-//   }
-// }
-
-// CopyButton.propTypes = {
-//   displayText: PropTypes.string.isRequired,
-//   textToCopy: PropTypes.string.isRequired,
-// };
 
 export class AssetsTable extends React.Component {
   constructor(props) {
@@ -179,7 +142,6 @@ export class AssetsTable extends React.Component {
       const deleteButton = (<Button
         className={[FontAwesomeStyles.fa, FontAwesomeStyles['fa-trash']]}
         label={''}
-        // buttonType={'light'}
         aria-label={`Delete ${currentAsset.display_name}`}
         onClick={() => { this.onDeleteClick(index); }}
         inputRef={(ref) => { this.trashcanRefs[currentAsset.id] = ref; }}
