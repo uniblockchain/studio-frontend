@@ -5,48 +5,49 @@ import Button from '@edx/paragon/src/Button';
 import Modal from '@edx/paragon/src/Modal';
 import StatusAlert from '@edx/paragon/src/StatusAlert';
 import classNames from 'classnames';
-import copy from 'copy-to-clipboard';
+// import copy from 'copy-to-clipboard';
 import { connect } from 'react-redux';
 
 import FontAwesomeStyles from 'font-awesome/css/font-awesome.min.css';
 import { assetActions } from '../../data/constants/actionTypes';
 import { clearAssetsStatus, deleteAsset, sortUpdate } from '../../data/actions/assets';
+import CopyButton from '../CopyButton';
 
-class CopyButton extends React.Component {
-  constructor(props) {
-    super(props);
+// class CopyButton extends React.Component {
+//   constructor(props) {
+//     super(props);
 
-    this.state = {
-      displayText: props.displayText,
-      urlToCopy: props.textToCopy,
-      wasClicked: false,
-    };
-  }
+//     this.state = {
+//       displayText: props.displayText,
+//       textToCopy: props.textToCopy,
+//       wasClicked: false,
+//     };
+//   }
 
-  render() {
-    return (
-      <Button
-        label={!this.state.wasClicked ? this.state.displayText : 'Copied!'}
-        onClick={() => {
-          this.setState({
-            wasClicked: true,
-          });
-          copy(`${this.props.textToCopy}`);
-        }}
-        onBlur={() => {
-          this.setState({
-            wasClicked: false,
-          });
-        }}
-      />
-    );
-  }
-}
+//   render() {
+//     return (
+//       <Button
+//         label={!this.state.wasClicked ? this.state.displayText : 'Copied!'}
+//         onClick={() => {
+//           this.setState({
+//             wasClicked: true,
+//           });
+//           copy(`${this.props.textToCopy}`);
+//         }}
+//         onBlur={() => {
+//           this.setState({
+//             wasClicked: false,
+//           });
+//         }}
+//       />
+//     );
+//   }
+// }
 
-CopyButton.propTypes = {
-  displayText: PropTypes.string.isRequired,
-  textToCopy: PropTypes.string.isRequired,
-};
+// CopyButton.propTypes = {
+//   displayText: PropTypes.string.isRequired,
+//   textToCopy: PropTypes.string.isRequired,
+// };
 
 export class AssetsTable extends React.Component {
   constructor(props) {
@@ -155,6 +156,23 @@ export class AssetsTable extends React.Component {
     return thumbnail ? (<img src={`${baseUrl}${thumbnail}`} alt="Description not available" />) : 'Preview not available';
   }
 
+  getCopyUrlButtons(studioUrl, webUrl) {
+    return (
+      <span>
+        {this.getCopyUrlButton(studioUrl, 'Copy Studio URL')}
+        {this.getCopyUrlButton(webUrl, 'Copy Web URL')}
+      </span>
+    );
+  }
+
+  getCopyUrlButton(url, label) {
+    return (<CopyButton
+      label={label}
+      onCopyLabel="Copied!"
+      textToCopy={url}
+    />);
+  }
+
   addSupplementalTableElements() {
     const newAssetsList = this.props.assetsList.map((asset, index) => {
       const currentAsset = Object.assign({}, asset);
@@ -179,19 +197,7 @@ export class AssetsTable extends React.Component {
       */
       currentAsset.image_preview = this.getImageThumbnail(currentAsset.thumbnail);
 
-      const urls = (
-        <span>
-          <CopyButton
-            displayText="Copy Studio URL"
-            textToCopy={currentAsset.url}
-          />
-          <CopyButton
-            displayText="Copy Web URL"
-            textToCopy={currentAsset.external_url}
-          />
-        </span>);
-
-      currentAsset.urls = urls;
+      currentAsset.urls = this.getCopyUrlButtons(currentAsset.url, currentAsset.external_url);
 
       return currentAsset;
     });

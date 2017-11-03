@@ -5,6 +5,8 @@ import { AssetsTable } from './index';
 import { assetActions } from '../../data/constants/actionTypes';
 
 const thumbnail = '/animal';
+const studioUrl = 'animal';
+const webUrl = 'animal';
 
 const defaultProps = {
   assetsList: [
@@ -12,21 +14,29 @@ const defaultProps = {
       display_name: 'cat.jpg',
       id: 'cat.jpg',
       thumbnail,
+      url: studioUrl,
+      external_url: webUrl,
     },
     {
       display_name: 'dog.png',
       id: 'dog.png',
       thumbnail,
+      url: studioUrl,
+      external_url: webUrl,
     },
     {
       display_name: 'bird.json',
       id: 'bird.json',
       thumbnail: null,
+      url: studioUrl,
+      external_url: webUrl,
     },
     {
       display_name: 'fish.doc',
       id: 'fish.doc',
       thumbnail: null,
+      url: studioUrl,
+      external_url: webUrl,
     },
   ],
   assetsParameters: {
