@@ -22,8 +22,8 @@ export default class CopyButton extends React.Component {
         // className={[FontAwesomeStyles.fa, FontAwesomeStyles['fa-files-o']]}
         label={!this.state.wasClicked ? (
           <span>
-            {this.props.label}
             <span className={classNames(FontAwesomeStyles.fa, FontAwesomeStyles['fa-files-o'])}/>
+            {this.props.label}
           </span>)
           : this.props.onCopyLabel}
         onClick={() => {
