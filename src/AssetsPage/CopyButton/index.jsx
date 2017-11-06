@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@edx/paragon/src/Button';
 import copy from 'copy-to-clipboard';
+import FontAwesomeStyles from 'font-awesome/css/font-awesome.min.css';
+import classNames from 'classnames';
 
 export default class CopyButton extends React.Component {
   constructor(props) {
@@ -15,7 +17,15 @@ export default class CopyButton extends React.Component {
   render() {
     return (
       <Button
-        label={!this.state.wasClicked ? this.props.label : this.props.onCopyLabel}
+      //<i class="fa fa-clipboard" aria-hidden="true"></i>
+
+        // className={[FontAwesomeStyles.fa, FontAwesomeStyles['fa-files-o']]}
+        label={!this.state.wasClicked ? (
+          <span>
+            {this.props.label}
+            <span className={classNames(FontAwesomeStyles.fa, FontAwesomeStyles['fa-files-o'])}/>
+          </span>)
+          : this.props.onCopyLabel}
         onClick={() => {
           this.setState({
             wasClicked: true,

@@ -122,8 +122,8 @@ export class AssetsTable extends React.Component {
   getCopyUrlButtons(studioUrl, webUrl) {
     return (
       <span>
-        {this.getCopyUrlButton(studioUrl, 'Copy Studio URL')}
-        {this.getCopyUrlButton(webUrl, 'Copy Web URL')}
+        {this.getCopyUrlButton(studioUrl, 'Studio ')}
+        {this.getCopyUrlButton(webUrl, 'Web ')}
       </span>
     );
   }
