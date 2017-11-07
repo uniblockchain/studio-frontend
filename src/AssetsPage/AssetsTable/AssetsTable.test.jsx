@@ -5,8 +5,7 @@ import { AssetsTable } from './index';
 import { assetActions } from '../../data/constants/actionTypes';
 
 const thumbnail = '/animal';
-const studioUrl = 'animal';
-const webUrl = 'animal';
+const copyUrl = 'animal';
 
 const defaultProps = {
   assetsList: [
@@ -14,29 +13,29 @@ const defaultProps = {
       display_name: 'cat.jpg',
       id: 'cat.jpg',
       thumbnail,
-      url: studioUrl,
-      external_url: webUrl,
+      url: copyUrl,
+      external_url: copyUrl,
     },
     {
       display_name: 'dog.png',
       id: 'dog.png',
       thumbnail,
-      url: studioUrl,
-      external_url: webUrl,
+      url: copyUrl,
+      external_url: copyUrl,
     },
     {
       display_name: 'bird.json',
       id: 'bird.json',
       thumbnail: null,
-      url: studioUrl,
-      external_url: webUrl,
+      url: copyUrl,
+      external_url: copyUrl,
     },
     {
       display_name: 'fish.doc',
       id: 'fish.doc',
       thumbnail: null,
-      url: studioUrl,
-      external_url: webUrl,
+      url: copyUrl,
+      external_url: copyUrl,
     },
   ],
   assetsParameters: {
@@ -156,6 +155,9 @@ describe('<AssetsTable />', () => {
           expect(row.containsMatchingElement(<td>Preview not available</td>)).toEqual(true);
         }
       });
+    });
+    it('correct number of copy buttons', () => {
+
     });
     it('Loading when waiting for response', () => {
       const emptyProps = {

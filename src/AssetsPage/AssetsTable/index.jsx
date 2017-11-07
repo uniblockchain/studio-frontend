@@ -47,7 +47,7 @@ export class AssetsTable extends React.Component {
         columnSortable: true,
       },
       urls: {
-        label: 'URLs',
+        label: 'Copy URLs',
         key: 'urls',
         columnSortable: false,
       },
@@ -122,15 +122,21 @@ export class AssetsTable extends React.Component {
   getCopyUrlButtons(studioUrl, webUrl) {
     return (
       <span>
-        {this.getCopyUrlButton(studioUrl, 'Studio ')}
-        {this.getCopyUrlButton(webUrl, 'Web ')}
+        {studioUrl ? this.getCopyUrlButton(studioUrl, 'Studio ') : <span />}
+        {webUrl ? this.getCopyUrlButton(webUrl, 'Web ') : <span />}
       </span>
     );
   }
 
   getCopyUrlButton(url, label) {
+    const buttonLabel = (
+      <span><span className={classNames(FontAwesomeStyles.fa, FontAwesomeStyles['fa-files-o'])} aria-label="Copy" />
+        {label}
+      </span>
+    );
+
     return (<CopyButton
-      label={label}
+      label={buttonLabel}
       onCopyLabel="Copied!"
       textToCopy={url}
     />);

@@ -25,18 +25,21 @@ describe('<CopyButton />', () => {
   });
   describe('renders', () => {
     it('label with correct text', () => {
-      expect(wrapper.find('button').matchesElement(<button>{defaultProps.label}</button>)).toEqual(true);
+      expect(button.matchesElement(<button><span>{defaultProps.label}</span></button>))
+        .toEqual(true);
     });
     it('label with correct default onCopy text on click', () => {
       expect(button).toHaveLength(1);
       button.at(0).simulate('click');
-      expect(button.matchesElement(<button>{defaultProps.onCopyLabel}</button>)).toEqual(true);
+      expect(button.matchesElement(<button><span>{defaultProps.onCopyLabel}</span></button>))
+        .toEqual(true);
     });
     it('label with correct text onBlur', () => {
       button.at(0).simulate('click');
       button.at(0).simulate('blur');
 
-      expect(button.matchesElement(<button>{defaultProps.label}</button>)).toEqual(true);
+      expect(button.matchesElement(<button><span>{defaultProps.label}</span></button>))
+        .toEqual(true);
     });
   });
   describe('state', () => {

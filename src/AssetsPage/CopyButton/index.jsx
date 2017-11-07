@@ -15,17 +15,13 @@ export default class CopyButton extends React.Component {
   }
 
   render() {
+    const label = this.state.wasClicked ? this.props.onCopyLabel : this.props.label;
+
     return (
       <Button
-      //<i class="fa fa-clipboard" aria-hidden="true"></i>
-
-        // className={[FontAwesomeStyles.fa, FontAwesomeStyles['fa-files-o']]}
-        label={!this.state.wasClicked ? (
-          <span>
-            <span className={classNames(FontAwesomeStyles.fa, FontAwesomeStyles['fa-files-o'])}/>
-            {this.props.label}
-          </span>)
-          : this.props.onCopyLabel}
+        label={
+          <span role="region" aria-live="assertive">{label}</span>
+        }
         onClick={() => {
           this.setState({
             wasClicked: true,
