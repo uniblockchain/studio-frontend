@@ -20,14 +20,14 @@ const defaultProps = {
       display_name: 'dog.png',
       id: 'dog.png',
       thumbnail,
-      url: copyUrl,
-      external_url: copyUrl,
+      url: null,
+      external_url: null,
     },
     {
       display_name: 'bird.json',
       id: 'bird.json',
       thumbnail: null,
-      url: copyUrl,
+      url: null,
       external_url: copyUrl,
     },
     {
@@ -35,7 +35,7 @@ const defaultProps = {
       id: 'fish.doc',
       thumbnail: null,
       url: copyUrl,
-      external_url: copyUrl,
+      external_url: null,
     },
   ],
   assetsParameters: {
@@ -79,6 +79,10 @@ const defaultColumns = [
     columnSortable: true,
   },
   {
+    label: 'Copy URLs',
+    columnSortable: false,
+  },
+  {
     label: 'Delete Asset',
     columnSortable: false,
     hideHeader: true,
@@ -100,6 +104,8 @@ const getMockForDeleteAsset = (wrapper, assetToDeleteId) => (
 );
 
 const numberOfImages = defaultProps.assetsList.filter(asset => asset.thumbnail).length;
+const numberOfStudioButtons = defaultProps.assetsList.filter(asset => asset.url).length;
+const numberOfWebButtons = defaultProps.assetsList.filter(asset => asset.external_url).length;
 
 let wrapper;
 
@@ -116,15 +122,22 @@ describe('<AssetsTable />', () => {
       // + 1 because it includes row item for headings
       expect(wrapper.find('tr')).toHaveLength(defaultProps.assetsList.length + 1);
     });
-    it('correct number, sortable status, and hidden status of headings', () => {
+    it('correct number of headings', () => {
       expect(wrapper.find('th')).toHaveLength(defaultColumns.length);
+    });
+    it('correct sotable status of headings', () => {
       expect(
         wrapper.find('th').filterWhere(heading => heading.hasClass('sortable')),
       ).toHaveLength(
         defaultColumns.filter(column => column.columnSortable).length,
       );
+    });
+    it('correct hidden status of headings', () => {
+      // non-sortable, non-hidden columns (e.g. Copy URLs) may just have text in the heading,
+      // in which case they have no children, so we have an explicit check that the heading
+      // has a child
       expect(
-        wrapper.find('th').filterWhere(heading => heading.childAt(0).html() === '<span class="sr-only"></span>'),
+        wrapper.find('th').filterWhere(heading => heading.childAt(0).exists() && heading.childAt(0).html() === '<span class="sr-only"></span>'),
       ).toHaveLength(
         defaultColumns.filter(column => column.hideHeader).length,
       );
@@ -157,7 +170,17 @@ describe('<AssetsTable />', () => {
       });
     });
     it('correct number of copy buttons', () => {
-
+      expect(wrapper.find('tr td CopyButton')).toHaveLength(numberOfStudioButtons + numberOfWebButtons);
+    });
+    it('correct number of Studio copy buttons', () => {
+      expect(wrapper.find('tr td CopyButton')
+        .filterWhere(copyButton => copyButton.text().trim() === 'Studio'))
+        .toHaveLength(numberOfStudioButtons);
+    });
+    it('correct number of Web copy buttons', () => {
+      expect(wrapper.find('tr td CopyButton')
+        .filterWhere(copyButton => copyButton.text().trim() === 'Web'))
+        .toHaveLength(numberOfWebButtons);
     });
     it('Loading when waiting for response', () => {
       const emptyProps = {

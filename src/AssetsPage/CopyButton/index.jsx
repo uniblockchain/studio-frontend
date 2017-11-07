@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@edx/paragon/src/Button';
 import copy from 'copy-to-clipboard';
-import FontAwesomeStyles from 'font-awesome/css/font-awesome.min.css';
-import classNames from 'classnames';
 
 export default class CopyButton extends React.Component {
   constructor(props) {
