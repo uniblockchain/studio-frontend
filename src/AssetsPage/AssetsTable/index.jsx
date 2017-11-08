@@ -119,24 +119,27 @@ export class AssetsTable extends React.Component {
     return thumbnail ? (<img src={`${baseUrl}${thumbnail}`} alt="Description not available" />) : 'Preview not available';
   }
 
-  getCopyUrlButtons(studioUrl, webUrl) {
+  getCopyUrlButtons(assetDisplayName, studioUrl, webUrl) {
     return (
       <span>
-        {studioUrl ? this.getCopyUrlButton(studioUrl, 'Studio ') : <span />}
-        {webUrl ? this.getCopyUrlButton(webUrl, 'Web ') : <span />}
+        {studioUrl ? this.getCopyUrlButton(assetDisplayName, studioUrl, 'Studio ') : <span />}
+        {webUrl ? this.getCopyUrlButton(assetDisplayName, webUrl, 'Web ') : <span />}
       </span>
     );
   }
 
-  getCopyUrlButton(url, label) {
-    const buttonLabel = (
-      <span><span className={classNames(FontAwesomeStyles.fa, FontAwesomeStyles['fa-files-o'])} aria-label="Copy" />
-        {label}
-      </span>
-    );
+  getCopyUrlButton(assetDisplayName, url, label) {
+    // const buttonLabel = (
+    //   <span><span className={classNames(FontAwesomeStyles.fa, FontAwesomeStyles['fa-files-o'])} aria-hidden />
+    //     {label}
+    //   </span>
+    // );
+
+    const buttonLabel = `${label}`.trim();
 
     return (<CopyButton
       label={buttonLabel}
+      ariaLabel={`${assetDisplayName} copy ${label} URL`}
       onCopyLabel="Copied!"
       textToCopy={url}
     />);
@@ -165,7 +168,7 @@ export class AssetsTable extends React.Component {
       */
       currentAsset.image_preview = this.getImageThumbnail(currentAsset.thumbnail);
 
-      currentAsset.urls = this.getCopyUrlButtons(currentAsset.url, currentAsset.external_url);
+      currentAsset.urls = this.getCopyUrlButtons(currentAsset.display_name, currentAsset.url, currentAsset.external_url);
 
       return currentAsset;
     });
