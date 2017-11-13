@@ -12,7 +12,7 @@
   },
   "license": "AGPL-3.0",
   "dependencies": {
-    "@edx/paragon": "edx/paragon.git#1f2759a0edaef4e7dd80e9644d8b3fac89081417",
+    "@edx/paragon": "edx/paragon.git#d877ac7eb03b684a41e0a1f01f14f28980a8ae2d",
     "classnames": "^2.2.5",
     "@edx/edx-bootstrap": "^0.4.0",
     "babel-polyfill": "^6.26.0",

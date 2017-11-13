@@ -22,6 +22,7 @@ export class AssetsTable extends React.Component {
       deletedAsset: {},
       deletedAssetIndex: null,
       elementToFocusOnModalClose: {},
+      copyButtonIsClicked: false,
     };
 
     this.columns = {
@@ -68,6 +69,8 @@ export class AssetsTable extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.closeStatusAlert = this.closeStatusAlert.bind(this);
     this.renderStatusAlert = this.renderStatusAlert.bind(this);
+
+    this.onCopyButtonClick = this.onCopyButtonClick.bind(this);
   }
 
   onSortClick(columnKey) {
@@ -91,6 +94,12 @@ export class AssetsTable extends React.Component {
       deletedAssetIndex: index,
       elementToFocusOnModalClose: this.trashcanRefs[assetToDelete.id],
       modalOpen: true,
+    });
+  }
+
+  onCopyButtonClick(isClicked) {
+    this.setState({
+      copyButtonIsClicked: isClicked,
     });
   }
 
@@ -129,19 +138,23 @@ export class AssetsTable extends React.Component {
   }
 
   getCopyUrlButton(assetDisplayName, url, label) {
-    // const buttonLabel = (
-    //   <span><span className={classNames(FontAwesomeStyles.fa, FontAwesomeStyles['fa-files-o'])} aria-hidden />
-    //     {label}
-    //   </span>
-    // );
+    const buttonLabel = (
+      <span>
+        <span className={classNames(FontAwesomeStyles.fa, FontAwesomeStyles['fa-files-o'])} aria-hidden />
+        {label}
+      </span>
+    );
 
-    const buttonLabel = `${label}`.trim();
+    // const buttonLabel = `${label}`.trim();
 
     return (<CopyButton
       label={buttonLabel}
       ariaLabel={`${assetDisplayName} copy ${label} URL`}
       onCopyLabel="Copied!"
       textToCopy={url}
+      // onClick={() => {}}
+      // onBlur={() => {}}
+      onEvent={this.onCopyButtonClick}
     />);
   }
 
@@ -168,7 +181,10 @@ export class AssetsTable extends React.Component {
       */
       currentAsset.image_preview = this.getImageThumbnail(currentAsset.thumbnail);
 
-      currentAsset.urls = this.getCopyUrlButtons(currentAsset.display_name, currentAsset.url, currentAsset.external_url);
+      currentAsset.urls = this.getCopyUrlButtons(
+        currentAsset.display_name,
+        currentAsset.url,
+        currentAsset.external_url);
 
       return currentAsset;
     });
@@ -280,6 +296,7 @@ export class AssetsTable extends React.Component {
   }
 
   render() {
+    // console.log(this.state.copyButtonIsClicked);
     let renderOutput;
     // TODO: Add UI for when there is nothing in the list and we have a status returned from the API
     // TODO: http://fhtwd0.axshare.com/#g=1&p=files-and-uploads-empty
@@ -301,6 +318,7 @@ export class AssetsTable extends React.Component {
             defaultSortDirection="desc"
           />
           {this.renderModal()}
+          <span className="sr" aria-live="assertive" role="region" id="copy-status"> {this.state.copyButtonIsClicked ? 'Copied' : ''} </span>
         </div>
       );
     }

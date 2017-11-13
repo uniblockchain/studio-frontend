@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@edx/paragon/src/Button';
 import copy from 'copy-to-clipboard';
+import styles from './CopyButton.scss';
 
 export default class CopyButton extends React.Component {
   constructor(props) {
@@ -11,66 +12,57 @@ export default class CopyButton extends React.Component {
       wasClicked: false,
     };
 
-    // this.onClick = this.onClick.bind(this);
-    // this.onKeyDown = this.onKeyDown.bind(this);
-    // this.eventHandler = this.eventHandler.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
+    this.eventHandler = this.eventHandler.bind(this);
   }
 
-  // onClick() {
-  //   console.log('bloop');
-  //   this.eventHandler();
-  // }
+  onClick() {
+    this.eventHandler();
+  }
 
-  // onKeyDown(e) {
-  //   if (e.key === 'Enter' || e.key === 'Space') {
-  //     this.eventHandler();
-  //   }
-  // }
+  onKeyDown(e) {
+    if (e.key === 'Enter' || e.key === 'Space') {
+      this.eventHandler();
+    }
+  }
 
-  // eventHandler() {
-  //   this.setState({
-  //     wasClicked: true,
-  //   });
-  //   copy(`${this.props.textToCopy}`);
-  // }
+  onBlur() {
+    // console.log('onBlur', this.props.textToCopy);
+    this.setState({
+      wasClicked: false,
+    });
+    this.props.onEvent(false);
+  }
+
+  eventHandler() {
+    this.setState({
+      wasClicked: true,
+    });
+    this.buttonRef.focus();
+    copy(`${this.props.textToCopy}`);
+    this.props.onEvent(true);
+  }
+
+  compondentDidUpdate(prevState) {
+    if (!prevState.wasClicked && this.state.wasClicked) {
+      this.buttonRef.focus();
+    }
+  }
 
   render() {
-    console.log('render', this.props.label);
     const label = this.state.wasClicked ? this.props.onCopyLabel : this.props.label;
 
     return (
       <Button
-        className={[label]}
+        className={[styles['button-width']]}
         aria-label={this.props.ariaLabel}
-        label={
-          <span role="region" aria-live="assertive">{label}</span>
-        }
+        label={label}
         inputRef={(input) => { this.buttonRef = input; }}
-        // onClick={this.onClick}
-        // onKeyDown={this.onKeyDown}
-        onClick={(e) => {
-          console.log('onClick', this.props.label);
-          // this.buttonRef.focus();
-
-
-          /*EVIL COPY COMMAND! */
-          // copy(`${this.props.textToCopy}`);
-
-          this.buttonRef.focus();
-          this.setState({
-            wasClicked: true,
-          });
-
-          /*
-            let clickFast = () => {document.querySelector('.Studio').click(); document.querySelector('.Web').click(); }
-          */
-        }}
-        onBlur={() => {
-          console.log('onBlur', this.props.label);
-          this.setState({
-            wasClicked: false,
-          });
-        }}
+        onClick={this.onClick}
+        onKeyDown={this.onKeyDown}
+        onBlur={this.onBlur}
       />
     );
   }
@@ -81,4 +73,9 @@ CopyButton.propTypes = {
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
   onCopyLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
   textToCopy: PropTypes.string.isRequired,
+  onEvent: PropTypes.func,
+};
+
+CopyButton.defaultProps = {
+  onEvent: () => {},
 };
