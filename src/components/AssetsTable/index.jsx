@@ -11,6 +11,7 @@ import FontAwesomeStyles from 'font-awesome/css/font-awesome.min.css';
 import { assetActions } from '../../data/constants/actionTypes';
 import { assetLoading } from '../../data/constants/loadingTypes';
 import { clearAssetsStatus, deleteAsset, sortUpdate, toggleLockAsset } from '../../data/actions/assets';
+import styles from './modal.scss';
 
 export class AssetsTable extends React.Component {
   constructor(props) {
@@ -265,7 +266,7 @@ export class AssetsTable extends React.Component {
         buttons={[
           <Button
             label="Yes, delete."
-            buttonType="primary"
+            buttonType="link"
             onClick={this.deleteAsset}
           />,
         ]}
@@ -275,11 +276,14 @@ export class AssetsTable extends React.Component {
 
   renderModalBody() {
     return (
-      <div>
-        <span className={classNames(FontAwesomeStyles.fa, FontAwesomeStyles['fa-exclamation-triangle'])} aria-hidden="true" />
-        Are you sure you wish to delete this item?
-        This cannot be reversed! Any content that links/refers to this item will no longer work
-        (e.g. images and/or links may break).
+      <div className={classNames(styles['modal-body'])}>
+        <span className={classNames(FontAwesomeStyles.fa, FontAwesomeStyles['fa-exclamation-triangle'], styles['modal-alert-icon'])} aria-hidden="true" />
+        <span className={classNames(styles['modal-text'])}>
+          {`Deleting ${this.state.assetToDelete.display_name}`}
+        <span className={classNames(styles['modal-text'])}>
+          Any links or references to this file will no longer work.
+        </span>
+        </span>
       </div>
     );
   }
