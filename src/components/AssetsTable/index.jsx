@@ -258,6 +258,8 @@ export class AssetsTable extends React.Component {
   renderModal() {
     return (
       <Modal
+        // className={classNames(styles['Modal__modal-content'])}
+        styles={styles['modal-content']}
         open={this.state.modalOpen}
         title={`Delete ${this.state.assetToDelete.display_name}`}
         body={this.renderModalBody()}
@@ -265,8 +267,8 @@ export class AssetsTable extends React.Component {
         onClose={this.closeModal}
         buttons={[
           <Button
-            label="Yes, delete."
-            buttonType="link"
+            label="Permanently Delete"
+            buttonType="primary"
             onClick={this.deleteAsset}
           />,
         ]}
@@ -280,9 +282,9 @@ export class AssetsTable extends React.Component {
         <span className={classNames(FontAwesomeStyles.fa, FontAwesomeStyles['fa-exclamation-triangle'], styles['modal-alert-icon'])} aria-hidden="true" />
         <span className={classNames(styles['modal-text'])}>
           {`Deleting ${this.state.assetToDelete.display_name}`}
-        <span className={classNames(styles['modal-text'])}>
-          Any links or references to this file will no longer work.
-        </span>
+          <span className={classNames(styles['modal-text'])}>
+            Any links or references to this file will no longer work.
+          </span>
         </span>
       </div>
     );
