@@ -35,7 +35,7 @@ Note the snake-cased attribute values for "sort" and the keys of "assets"[0].
 
 */
 
-const invertMap = (map) => {
+export const invertMap = (map) => {
   const invertedMap = new Map();
 
   map.forEach(
@@ -45,13 +45,14 @@ const invertMap = (map) => {
   return invertedMap;
 };
 
-const assetAPIAttributesToDatabaseAttributes = new Map([
+export const assetAPIAttributesToDatabaseAttributes = new Map([
   ['display_name', 'displayname'],
   ['content_type', 'contentType'],
   ['date_added', 'uploadDate'],
 ]);
 
-const assetDatabaseAttributesToAPIAttributes = invertMap(assetAPIAttributesToDatabaseAttributes);
+export const assetDatabaseAttributesToAPIAttributes = invertMap(
+  assetAPIAttributesToDatabaseAttributes);
 
 export const getDatabaseAttributesFromAssetAttributes = attribute => (
   attribute ? assetAPIAttributesToDatabaseAttributes.get(attribute) : ''
