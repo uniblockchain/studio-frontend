@@ -8,6 +8,7 @@ import styles from './AssetsPage.scss';
 import WrappedAssetsDropZone from '../AssetsDropZone/container';
 import WrappedAssetsTable from '../AssetsTable/container';
 import WrappedAssetsFilters from '../AssetsFilters/container';
+import WrappedAssetsImagePreviewFilter from '../AssetsImagePreviewFilter/container';
 import WrappedPagination from '../Pagination/container';
 import WrappedAssetsSearch from '../AssetsSearch/container';
 import WrappedAssetsStatusAlert from '../AssetsStatusAlert/container';
@@ -112,6 +113,9 @@ export default class AssetsPage extends React.Component {
     <React.Fragment>
       <div className={edxBootstrap.col}>
         { this.renderAssetsDropZone() }
+        <div className="page-header">
+          <WrappedAssetsImagePreviewFilter />
+        </div>
         { this.renderAssetsFilters() }
       </div>
       <div className={edxBootstrap['col-10']}>
