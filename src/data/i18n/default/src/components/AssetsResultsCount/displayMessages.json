@@ -2,11 +2,11 @@
   {
     "id": "assetsResultsCountFiltered",
     "description": "Message above a paginated table describing what subset of a filtered result set is currently visible.",
-    "defaultMessage": "Showing {start}-{end} out of {total} possible matches."
+    "defaultMessage": "Showing {start}-{end} out of {wrappedTotal} {total, plural, one {possible match} other {possible matches}}."
   },
   {
     "id": "assetsResultsCountTotal",
     "description": "Message above a paginated table of files describing what subset of all files is currently visible.",
-    "defaultMessage": "Showing {start}-{end} out of {total} total files."
+    "defaultMessage": "Showing {start}-{end} out of {wrappedTotal} {total, plural, one {total file} other {total files}}."
   }
 ]
